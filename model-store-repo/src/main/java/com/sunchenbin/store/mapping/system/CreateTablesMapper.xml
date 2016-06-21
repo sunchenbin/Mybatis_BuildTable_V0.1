@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sunchenbin.store.dao.system.CreateTablesMapper">
+
+	<!-- 创建表的 -->
+	<select id="createTable" parameterType="java.util.Map">
+
+		<foreach collection="tableMap" index="key" item="value">
+			create table `${key}`(
+			<foreach collection="value" item="fields" separator=",">
+				<if test="fields.fieldLength == 0 and fields.fieldDecimalLength == -1">
+					`${fields.fieldName}` ${fields.fieldType} 
+				</if>
+				<if test="fields.fieldLength != 0 and fields.fieldDecimalLength == -1">
+					`${fields.fieldName}` ${fields.fieldType}(${fields.fieldLength}) 
+				</if>
+				<if test="fields.fieldLength != 0 and fields.fieldDecimalLength != -1">
+					`${fields.fieldName}`
+					${fields.fieldType}(${fields.fieldLength},${fields.fieldDecimalLength}) 
+				</if>
+				<if test="fields.fieldLength == 0 and fields.fieldDecimalLength != -1">
+					`${fields.fieldName}` ${fields.fieldType} 
+				</if>
+				<if test="fields.fieldIsNull">
+					NULL 
+				</if>
+				<!-- 不是自增长的才能有默认值 -->
+				<if test="!fields.fieldIsAutoIncrement">
+					<!-- 是非空，并且默认值不为null时 -->
+					<if test="!fields.fieldIsNull and fields.fieldDefaultValue != 'NULL'">
+						DEFAULT ${fields.fieldDefaultValue} 
+					</if>
+					<!-- 不是非空时 -->
+					<if test="fields.fieldIsNull">
+						DEFAULT ${fields.fieldDefaultValue} 
+					</if>
+				</if>
+				<if test="fields.fieldIsAutoIncrement">
+					AUTO_INCREMENT 
+				</if>
+				<if test="fields.fieldIsKey">
+					,PRIMARY KEY (`${fields.fieldName}`)
+				</if>
+			</foreach>
+			);
+		</foreach>
+
+	</select>
+	
+	<!-- 验证表是否存在 -->
+	<select id="findTableCountByTableName" resultType="int" parameterType="String">
+		select count(1) from information_schema.tables
+		where table_name = #{tableName}
+	</select>
+	
+	<!-- 根据表名查询表的结构 -->
+	<select id="findTableEnsembleByTableName" resultType="com.sunchenbin.store.command.SysColumns" parameterType="String">
+		select * from information_schema.columns where table_name = #{tableName}
+	</select>
+	
+	<!-- 增加字段 -->
+	<select id="addTableField" parameterType="java.util.Map">
+	
+		<foreach collection="tableMap" index="key" item="fields" separator=";">
+				alter table `${key}` add 
+				<if test="fields.fieldLength == 0 and fields.fieldDecimalLength == -1">
+					`${fields.fieldName}` ${fields.fieldType} 
+				</if>
+				<if test="fields.fieldLength != 0 and fields.fieldDecimalLength == -1">
+					`${fields.fieldName}` ${fields.fieldType}(${fields.fieldLength}) 
+				</if>
+				<if test="fields.fieldLength != 0 and fields.fieldDecimalLength != -1">
+					`${fields.fieldName}`
+					${fields.fieldType}(${fields.fieldLength},${fields.fieldDecimalLength}) 
+				</if>
+				<if test="fields.fieldLength == 0 and fields.fieldDecimalLength != -1">
+					`${fields.fieldName}` ${fields.fieldType} 
+				</if>
+				<if test="fields.fieldIsNull">
+					NULL 
+				</if>
+				<!-- 不是自增长的才能有默认值 -->
+				<if test="!fields.fieldIsAutoIncrement">
+					<!-- 是非空，并且默认值不为null时 -->
+					<if test="!fields.fieldIsNull and fields.fieldDefaultValue != 'NULL'">
+						DEFAULT ${fields.fieldDefaultValue}
+					</if>
+					<!-- 不是非空时 -->
+					<if test="fields.fieldIsNull">
+						DEFAULT ${fields.fieldDefaultValue}
+					</if>
+				</if>
+		</foreach>
+		
+	</select>
+	
+	<!-- 删除字段 -->
+	<select id="removeTableField" parameterType="java.util.Map">
+		<foreach collection="tableMap" index="key" item="field" separator=";">
+			alter table `${key}` drop `${field}`
+		</foreach>
+	</select>
+	
+	<!-- 修改字段 -->
+	<select id="modifyTableField" parameterType="java.util.Map">
+	
+		<foreach collection="tableMap" index="key" item="fields" separator=";">
+				alter table `${key}` modify 
+				<if test="fields.fieldLength == 0 and fields.fieldDecimalLength == -1">
+					`${fields.fieldName}` ${fields.fieldType} 
+				</if>
+				<if test="fields.fieldLength != 0 and fields.fieldDecimalLength == -1">
+					`${fields.fieldName}` ${fields.fieldType}(${fields.fieldLength}) 
+				</if>
+				<if test="fields.fieldLength != 0 and fields.fieldDecimalLength != -1">
+					`${fields.fieldName}`
+					${fields.fieldType}(${fields.fieldLength},${fields.fieldDecimalLength}) 
+				</if>
+				<if test="fields.fieldLength == 0 and fields.fieldDecimalLength != -1">
+					`${fields.fieldName}` ${fields.fieldType} 
+				</if>
+				<if test="fields.fieldIsNull">
+					NULL 
+				</if>
+				<!-- 不是自增长的才能有默认值 -->
+				<if test="!fields.fieldIsAutoIncrement">
+					<!-- 是非空，并且默认值不为null时 -->
+					<if test="!fields.fieldIsNull and fields.fieldDefaultValue != 'NULL'">
+						DEFAULT ${fields.fieldDefaultValue}
+					</if>
+					<!-- 不是非空时 -->
+					<if test="fields.fieldIsNull">
+						DEFAULT ${fields.fieldDefaultValue}
+					</if>
+				</if>
+		</foreach>
+		
+	</select>
+	
+</mapper>
