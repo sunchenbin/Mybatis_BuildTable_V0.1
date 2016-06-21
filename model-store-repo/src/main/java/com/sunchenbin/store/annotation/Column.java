@@ -35,16 +35,16 @@ public @interface Column {
 	public String type();
 
 	/**
-	 * 字段长度，默认是255（若类型不需要长度必须要设置为0）
+	 * 字段长度，默认是255
 	 * @return
 	 */
 	public int length() default 255;
 
 	/**
-	 * 小数点长度，默认是-1（即不需要设置小数点长度的类型）
+	 * 小数点长度，默认是0
 	 * @return
 	 */
-	public int decimalLength() default -1;
+	public int decimalLength() default 0;
 	
 	/**
 	 * 是否为可以为null，true是可以，false是不可以，默认为true
@@ -60,6 +60,7 @@ public @interface Column {
 	
 	/**
 	 * 是否自动递增，默认false
+	 * 只有主键才能使用
 	 * @return
 	 */
 	public boolean isAutoIncrement() default false;

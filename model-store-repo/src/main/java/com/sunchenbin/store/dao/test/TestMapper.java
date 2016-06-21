@@ -10,7 +10,5 @@ public interface TestMapper {
 	public List<Test> findTest(Test test);
 	
 	public int findTestCount();
-	
-	public String testMap(Test test);
 
 }

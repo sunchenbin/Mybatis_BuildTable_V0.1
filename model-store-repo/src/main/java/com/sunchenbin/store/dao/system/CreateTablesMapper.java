@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import com.sunchenbin.store.command.CreateTableParam;
-import com.sunchenbin.store.command.SysColumns;
+import com.sunchenbin.store.command.SysMysqlColumns;
 
 
 /**
@@ -34,7 +34,7 @@ public interface CreateTablesMapper {
 	 * @param tableName
 	 * @return
 	 */
-	public List<SysColumns> findTableEnsembleByTableName(@Param("tableName") String tableName);
+	public List<SysMysqlColumns> findTableEnsembleByTableName(@Param("tableName") String tableName);
 	
 	/**
 	 * 增加字段
@@ -53,4 +53,10 @@ public interface CreateTablesMapper {
 	 * @param tableMap
 	 */
 	public void modifyTableField(@Param("tableMap") Map<String, Object> tableMap);
+	
+	/**
+	 * 删除主键字段
+	 * @param tableMap
+	 */
+	public void dropKeyTableField(@Param("tableMap") Map<String, Object> tableMap);
 }

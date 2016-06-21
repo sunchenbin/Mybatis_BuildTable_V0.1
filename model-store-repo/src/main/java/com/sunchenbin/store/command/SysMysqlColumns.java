@@ -6,7 +6,7 @@ package com.sunchenbin.store.command;
  * @author sunchenbin
  * 
  */
-public class SysColumns {
+public class SysMysqlColumns {
 
 	/**
 	 * 字段名

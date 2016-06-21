@@ -23,6 +23,8 @@ public class CreateTableParam{
 
 	private String	fieldDefaultValue;
 
+	private int		fileTypeLength;
+
 	public String getFieldName(){
 		return fieldName;
 	}
@@ -85,6 +87,14 @@ public class CreateTableParam{
 
 	public void setFieldDefaultValue(String fieldDefaultValue){
 		this.fieldDefaultValue = fieldDefaultValue;
+	}
+
+	public int getFileTypeLength(){
+		return fileTypeLength;
+	}
+
+	public void setFileTypeLength(int fileTypeLength){
+		this.fileTypeLength = fileTypeLength;
 	}
 
 }

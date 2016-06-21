@@ -4,30 +4,27 @@ import java.sql.Date;
 
 import com.sunchenbin.store.annotation.Column;
 import com.sunchenbin.store.annotation.Table;
-import com.sunchenbin.store.constants.SqlTypeConstant;
+import com.sunchenbin.store.constants.MySqlTypeConstant;
 
 @Table(name = "test2")
 public class Test2{
 
-	@Column(name = "id",type = SqlTypeConstant.INT,length = 11,isKey = true,isNull = false,isAutoIncrement = true)
+	@Column(name = "id",type = MySqlTypeConstant.INT,length = 11,isNull = false)
 	private int		id;
 
-	@Column(name = "name",type = SqlTypeConstant.VARCHAR,length = 100)
+	@Column(name = "name",type = MySqlTypeConstant.VARCHAR,length = 100,defaultValue="dsfw")
 	private String	name;
 
-	@Column(name = "description",type = SqlTypeConstant.TEXT,length = 0)
+	@Column(name = "description",type = MySqlTypeConstant.TEXT,length = 1000)
 	private String	description;
 
-	@Column(name = "create_time",type = SqlTypeConstant.DATETIME,length = 0)
-	private Date	create_time;
-
-	@Column(name = "update_time", type = SqlTypeConstant.DATETIME, length = 0)
+	@Column(name = "update_time",type = MySqlTypeConstant.DATETIME,length = 111,isNull=false)
 	private Date	update_time;
 
-	@Column(name = "number",type = SqlTypeConstant.NUMERIC,length = 5,decimalLength = 2)
+	@Column(name = "number",type = MySqlTypeConstant.INT,length = 8,isKey = true,isAutoIncrement = true)
 	private Long	number;
 
-	@Column(name = "lifecycle",type = SqlTypeConstant.CHAR,length = 1)
+	@Column(name = "lifecycle",type = MySqlTypeConstant.CHAR,length = 3)
 	private String	lifecycle;
 
 	public int getId(){
@@ -44,14 +41,6 @@ public class Test2{
 
 	public void setName(String name){
 		this.name = name;
-	}
-
-	public Date getCreate_time(){
-		return create_time;
-	}
-
-	public void setCreate_time(Date create_time){
-		this.create_time = create_time;
 	}
 
 	public Date getUpdate_time(){
